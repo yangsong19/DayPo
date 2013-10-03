@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="com.genuitec.eclipse.j2eedt.core.J2EE14_CONTAINER"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-io-1.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/htmlcleaner-2.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-4.0.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpcore-4.0.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/java_memcached-1.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mail.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-3.0.15-ga-bin.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/standard.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-3.8-20120326.jar" sourcepath="C:/Documents and Settings/Administrator/桌面/常用/poi-src-3.8-20120326.zip"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/activemq.jar"/>
+	<classpathentry kind="lib" path="lib/activemq-client-5.9-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.6.6.jar"/>
+	<classpathentry kind="lib" path="lib/activemq-broker-5.9-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-nodep-2.1_3.jar" sourcepath="d:/Documents and Settings/Administrator/My Documents/下载/cglib-2.2.1-sources.jar.zip"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.aopalliance-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aop-3.2.0.M1.jar" sourcepath="d:/Documents and Settings/Administrator/My Documents/下载/spring-3.2.0.M1/spring-3.2.0.M1/libs/spring-aop-3.2.0.M1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/spring-core-3.2.0.M1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-3.2.0.M1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-beans-3.2.0.M1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-asm-3.2.0.M1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-expression-3.2.0.M1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/jedis-2.1.0.jar" sourcepath="G:/Redis/jedis-master/src"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jmf-2.1.1e.jar"/>
+	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
+</classpath>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+	    <!-- 扫描指定包    将 @Component 注解的类自动定义为 Spring Bean -->
+	    <context:component-scan base-package="spring.aop" />
+	 
+	    <!-- 配置一个代理 -->
+	    <bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+	        <property name="interfaces" value="spring.aop.face.Greeting"/> <!-- 需要代理的接口 -->
+	        <property name="target" ref="greetingImpl"/>       <!-- 接口实现类 -->
+	        <property name="interceptorNames">                 <!-- 拦截器名称也就是增强类名称，Spring Bean 的 id-->
+	            <list>
+	                <value>around</value>
+	                <value>throw</value>
+	            </list>
+	        </property>
+	        <!--<property name="interceptorNames" value="advice"/>  只有一个增强类时，注意这行配置 -->
+	    </bean>
+</beans>
