@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="G:/ProxyAop/lib/spring-context-3.2.0.M1.jar"/>
 	<classpathentry kind="lib" path="G:/ProxyAop/lib/spring-core-3.2.0.M1.jar"/>
 	<classpathentry kind="lib" path="G:/ProxyAop/lib/spring-expression-3.2.0.M1.jar"/>
+	<classpathentry kind="lib" path="E:/MyEclipse/common_main_from_production/common_main_from_production/lib/mysql-connector-java-3.0.15-ga-bin.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
