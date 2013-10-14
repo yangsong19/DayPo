@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+	    <!-- 扫描指定包    将 @Component 注解的类自动定义为 Spring Bean -->
+	    <context:component-scan base-package="spring.aop" />
+	 
+	    <!-- 配置一个切面 -->
+	    <bean id="greetingAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+	    	<property name="advice" ref="around"></property>  <!-- 增强 -->
+	    	<property name="pattern" value="spring.aop.impl.GreetingImpl.good.*"></property>
+	    </bean>
+	    
+	    <!-- 配置一个代理 -->
+	    <bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+	    	<property name="target" ref="greetingImpl"></property>			<!-- 目标类 -->
+	    	<property name="interceptorNames" value="greetingAdvisor"></property> <!-- 切面 -->
+	    	<property name="proxyTargetClass" value="true"></property>		<!-- 代理目标类 -->
+	    </bean>
+	    
+	    <!--  注意以上代理对象的配置中的 interceptorNames，它不再是一个增强，而是一个切面，
+	    	  因为已经将增强封装到该切面中了。此外，切面还定义了一个切点（正则表达式），
+	    	  其目的是为了只将满足切点匹配条件的方法进行拦截。
+	     -->
+	     <!-- 
+	     	   总的来说，让用户去配置一个或少数几个代理，似乎还可以接受，但随着项目的扩大，
+	     	   代理配置就会越来越多，配置的重复劳动就多了，麻烦不说，还很容易出错。
+	     	   能否让 Spring 框架为我们自动生成代理呢？ 
+	      -->
+</beans>

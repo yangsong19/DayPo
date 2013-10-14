@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+	    <!-- 扫描指定包    将 @Component 注解的类自动定义为 Spring Bean -->
+	    <context:component-scan base-package="spring.aop" />
+	 
+	    <aop:aspectj-autoproxy proxy-target-class="true"/>
+	    
+	    <bean id="greetingImpl" class="spring.aop.impl.GreetingImpl"/>
+	 
+	    <bean id="greetingAspect" class="spring.aop.enhance.GreetingAspect"/>
+	 
+	    <aop:config>
+	        <aop:aspect ref="greetingAspect">
+	            <aop:around method="around" pointcut="execution(* spring.aop.impl.GreetingImpl.*(..))"/>
+	        </aop:aspect>
+	    </aop:config>
+<!--	 
+	 	
+增强类型 	                   基于 AOP 接口 	     基于 @Aspect 	    基于 <aop:config>
+Before Advice（前置增强）     MethodBeforeAdvice        @Before             <aop:before>
+AfterAdvice（后置增强）       AfterReturningAdvice      @After              <aop:after>
+AroundAdvice（环绕增强）      MethodInterceptor         @Around             <aop:around>
+ThrowsAdvice（抛出增强）      ThrowsAdvice              @AfterThrowing      <aop:after-throwing>
+IntroductionAdvice（引入增强）DelegatingIntroductionInterceptor  @DeclareParents   <aop:declare-parents>
+
+     	      两行配置就行了，不需要配置大量的代理，更不需要配置大量的切面，真是太棒了！需要注意的是 
+	          proxy-target-class="true" 属性，它的默认值是 false，默认只能代理接口（使用 JDK 动态代理），
+	          当为 true 时，才能代理目标类（使用 CGLib 动态代理）。Spring 与 AspectJ 结合的威力远远不止这些，
+	          我们来点时尚的吧，拦截指定注解的方法怎么样？ -->
+</beans>

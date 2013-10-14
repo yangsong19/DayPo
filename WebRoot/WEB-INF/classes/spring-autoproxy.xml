@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+	    <!-- 扫描指定包    将 @Component 注解的类自动定义为 Spring Bean -->
+	    <context:component-scan base-package="spring.aop" />
+	 
+	    <!-- 配置一个代理 -->
+	    <bean id="proxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+	        <property name="beanNames" value="*Impl"/>       <!-- 只为后缀是“Impl”的 Bean 生成代理 -->
+	        <property name="interceptorNames" value="around"/>  <!-- 拦截器名称也就是增强类名称-->
+	        <property name="optimize" value="true"/> <!-- 是否对代理生成策略进行优化 -->
+	    </bean>
+	    <!-- 
+	    	 以上使用 BeanNameAutoProxyCreator 只为后缀为“Impl”的 Bean 生成代理。需要注意的是，
+	    	 这个地方我们不能定义代理接口，也就是 interfaces 属性，因为我们根本就不知道这些 Bean 
+	    	 到底实现了多少接口。此时不能代理接口，而只能代理类。所以这里提供了一个新的配置项，它就是 optimize。
+	    	 若为 true 时，则可对代理生成策略进行优化（默认是 false 的）。也就是说，如果该类有接口，就代理接口
+	    	 （使用 JDK 动态代理）；如果没有接口，就代理类（使用 CGLib 动态代理）。而并非像之前使用的 proxyTargetClass
+	    	 属性那样，强制代理类，而不考虑代理接口的方式。可见 Spring AOP 确实为我们提供了很多很好地服务！既然 CGLib 
+	    	 可以代理任何的类了，那为什么还要用 JDK 的动态代理呢？肯定您会这样问。根据多年来实际项目经验得知：CGLib 创建
+	    	 代理的速度比较慢，但创建代理后运行的速度却非常快，而 JDK 动态代理正好相反。如果在运行的时候不断地用 CGLib 去
+	    	 创建代理，系统的性能会大打折扣，所以建议一般在系统初始化的时候用 CGLib 去创建代理，并放入 Spring 的 ApplicationContext 
+	    	 中以备后用。以上这个例子只能匹配目标类，而不能进一步匹配其中指定的方法，要匹配方法，就要考虑使用切面与切点了。Spring AOP 
+	    	 基于切面也提供了一个自动代理生成器：DefaultAdvisorAutoProxyCreator。 
+	     -->
+	     
+	     <bean id="greetingAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+	        <property name="pattern" value="spring.aop.impl.GreetingImpl.good.*"/>
+	        <property name="advice" ref="around"/>
+	    </bean>
+	 
+	    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+	        <property name="optimize" value="true"/>
+	    </bean>
+	 
+	 	<!-- 
+	 		 这里无需再配置代理了，因为代理将会由 DefaultAdvisorAutoProxyCreator 自动生成。也就是说，
+	 		 这个类可以扫描所有的切面类，并为其自动生成代理。看来不管怎样简化，老罗始终解决不了切面的配置，
+	 		 这件繁重的手工劳动。在 Spring 配置文件中，仍然会存在大量的切面配置。然而在有很多情况下 Spring AOP 
+	 		 所提供的切面类真的不太够用了，比如：想拦截指定注解的方法，我们就必须扩展 DefaultPointcutAdvisor 类，
+	 		 自定义一个切面类，然后在 Spring 配置文件中进行切面配置。不做不知道，做了您就知道相当麻烦了。老罗的解决方案
+	 		 似乎已经掉进了切面类的深渊，这还真是所谓的“面向切面编程”了，最重要的是切面，最麻烦的也是切面。必须要把切面
+	 		 配置给简化掉，Spring 才能有所突破！神一样的老罗总算认识到了这一点，接受了网友们的建议，集成了 AspectJ，同时
+	 		 也保留了以上提到的切面与代理配置方式（为了兼容老的项目，更为了维护自己的面子）。将 Spring 与 AspectJ 集成与
+	 		 直接使用 AspectJ 是不同的，我们不需要定义 AspectJ 类（它是扩展了 Java 语法的一种新的语言，还需要特定的编译器）
+	 		 只需要使用 AspectJ 切点表达式即可（它是比正则表达式更加友好的表现形式）。 
+	 	 -->
+</beans>

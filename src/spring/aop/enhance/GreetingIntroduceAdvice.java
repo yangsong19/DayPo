@@ -1,9 +1,5 @@
 package spring.aop.enhance;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.support.DelegatingIntroductionInterceptor;
 import org.springframework.stereotype.Component;
@@ -34,7 +30,7 @@ public class GreetingIntroduceAdvice extends DelegatingIntroductionInterceptor i
 	}
 
 	public void saySorry(String word) {
-		System.out.println(word);
+		System.out.println("Sorry, " + word);
 	}
 
 }

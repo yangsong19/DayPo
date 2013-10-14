@@ -1,5 +1,7 @@
 package spring.aop.test;
 
+import java.util.Arrays;
+
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -53,15 +55,51 @@ public class AdviceTest {
 		greeting = (Greeting) context.getBean("proxy");//is equivalent to ProxyFactory
 		greeting.greeting("Is this spring annotation xml configuration of aop?");
 		
-		System.out.println("\n<------IntroduceAdvice-------\n");//引入增强
+		System.out.println("\n<------IntroduceAdvice-------\n");//注意:转型为目标类,而并非它的 Greeting 接口
 		context = new ClassPathXmlApplicationContext("spring-aop-introduce.xml"); 
-		target = (GreetingImpl) context.getBean("proxy");// �ӿ�
-		target.greeting("This is invoking the target class 'GreetingImpl' method");
+		greeting = (Greeting) context.getBean("proxy");
+		greeting.greeting("This is invoking the target class 'GreetingImpl' method");
 		
 		System.out.println("\n-------suprised------>\n");
-		//本来Apology接口和GreetingImpl毫无关系,可是经过GreetingIntroduceAdvice这座桥梁联系起来 �ӿ�����������ǿ�����Ǵ�� 
-	    Apology apology = (Apology) target;
+		// 将目标类强制向上转型为 Apology 接口,这是引入增强给我们带来的特性,也就是【接口动态实现】功能 
+	    Apology apology = (Apology) greeting;
 	    apology.saySorry("I'm very excited that everything is OK!");
 		
+	    System.out.println("\n------Advisor--Pointcut------\n");
+	    context = new ClassPathXmlApplicationContext("spring-advisor.xml");
+	    target = (GreetingImpl) context.getBean("proxy");
+	    target.goodMorning("Lucy");
+	    target.goodNight("Lily");
+	    
+	    System.out.println("\n----AutoProxy------\n");
+	    context = new ClassPathXmlApplicationContext("spring-autoproxy.xml");
+	    System.out.println(Arrays.toString(context.getBeanDefinitionNames()));//这个方法很有用,参考价值
+	    target = (GreetingImpl) context.getBean("greetingImpl");
+	    target.goodMorning("Yangsong");
+	    target.goodNight("Mico");
+	    
+	    System.out.println("\n----AspectJ------\n");
+	    context = new ClassPathXmlApplicationContext("spring-aspectj.xml");
+	    target = (GreetingImpl) context.getBean("greetingImpl");
+	    target.greeting("Jemy");
+	    target.goodMorning("Jack");
+	    target.goodNight("Tom");
+/*	    
+ * 从 Spring ApplicationContext 中获取 greetingImpl 对象（其实是个代理对象），可转型为自己
+ * 静态实现的接口 Greeting，也可转型为自己动态实现的接口 Apology，切换起来非常方便。使用
+ * AspectJ 的引入增强比原来的 Spring AOP 的引入增强更加方便了，而且还可面向接口编程（
+ * 以前只能面向实现类），这也算一个非常巨大的突破。
+ * 
+ *  */
+	    apology = (Apology) target;
+	    apology.saySorry("Tony");
+
+	    
+	    System.out.println("\n-------AspectJ-Config-----\n");
+	    context = new ClassPathXmlApplicationContext("spring-aspectj-config.xml");
+	    greeting = (Greeting) context.getBean("greetingImpl");
+	    
+	    apology = (Apology) greeting;
+	    apology.saySorry("Termit");
 	}
 }
