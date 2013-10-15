@@ -1,6 +1,7 @@
 package thread.local.practice.action;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,11 @@ public class ProductServiceImpl implements ProductService {
 		Connection conn = null;
 		try {
 			conn = DBUtil.getConnection();
+			
+			DatabaseMetaData meta = conn.getMetaData();
+			int defaultIsolation = meta.getDefaultTransactionIsolation();
+			System.out.println("MySql DefaultIsolation:" + defaultIsolation);
+			
 			conn.setAutoCommit(false);
 			
 			updateProduct(conn, PRODUCT_UDPATE_SQL, price, productId);

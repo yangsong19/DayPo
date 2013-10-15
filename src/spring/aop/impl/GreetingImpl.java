@@ -13,7 +13,7 @@ public class GreetingImpl implements Greeting{
 	}
 	
 	//以上示例中只有一个方法，如果有多个方法，我们只想拦截其中某些时，这种解决方案会更加有价值
-	@Tag
+//	@Tag
 	public void greeting(String what) {
 		System.out.println("Hello, " + what);
 //		throw new RuntimeException("Error");

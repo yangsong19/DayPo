@@ -49,6 +49,7 @@ public class GreetingAspect {
 	最后一个 @DeclareParents 竟然就是引入增强！为什么不叫做 @Introduction 呢？我也不知道为什么，但它干的活就是引入增强。 
  *
  */
+//	@Around("execution(* spring.aop.impl.GreetingImpl.*(**))")
 	@Around("@annotation(spring.aop.face.Tag)")
 	public Object around(ProceedingJoinPoint pjp) throws Throwable {
 		before();
