@@ -4,7 +4,13 @@
 *.jar
 *.war
 *.ear
+
 /.classpath
 /WebRoot
 /.myeclipse
 /.settings
+
+/.project
+
+/.classpath
+
